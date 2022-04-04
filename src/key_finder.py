@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# built-in dependencies
 from typing import List
+
+# project dependencies
+from src.common import generate_key_sequences
 
 __author__ = "Henrique Kops"
 
@@ -9,19 +13,23 @@ __author__ = "Henrique Kops"
 class KeyFinder:
 
     def __init__(self, alphabet: str) -> None:
+        """KeyFinder class is meant to find the key size for a ciphered text using Vigenere's Cipher
+
+        Args:
+            alphabet (str): String representation of all letters of chosen alphabet
+        """
         self.__max_key_size = len(alphabet)
         self.__alphabet: List = list(alphabet)
 
-    def __generate_sequences(self, ciphered_text: str, key_size: int) -> List[str]:
-        sequences = list()
-        for key in range(key_size):
-            stringBuilder = str()
-            for hop in range(0, len(ciphered_text[key:]), key_size):
-                stringBuilder += ciphered_text[key + hop]
-            sequences.append(stringBuilder)
-        return sequences
-
     def __coincidence_index(self, sequence: str) -> float:
+        """Calculate the coincidence index for a given sequence of chars
+
+        Args:
+            sequence (str): A sequence of chars ciphered by the same key char 
+
+        Returns:
+            float: Coincidence index of the sequence
+        """
         sum = 0
         n = len(sequence)
         for letter in self.__alphabet:
@@ -30,16 +38,32 @@ class KeyFinder:
         return sum / (n * (n - 1))
 
     def __generate_ics(self, ciphered_text: str) -> List[str]:
+        """Generate a list of average of coincidence indexes by key size
+
+        Args:
+            ciphered_text (str): Ciphered text by Vigenere's Cipher
+
+        Returns:
+            List[str]: A list of average of coincidence indexes by key size
+        """
         ics = list()
         for key_size in range(1, self.__max_key_size+1):
             sum = 0
-            sequences = self.__generate_sequences(ciphered_text, key_size)
-            for sequence in sequences:
-                sum += self.__coincidence_index(sequence)
+            sequences = generate_key_sequences(ciphered_text, key_size)
+            for sequence in sequences: sum += self.__coincidence_index(sequence)
             ics.append(sum/len(sequences))
         return ics
 
     def find_key_size(self, ciphered_text: str, language_ic: float) -> int:
+        """Find the key size that encrypts the ciphered text at given language 
+
+        Args:
+            ciphered_text (str):  Ciphered text by Vigenere's Cipher
+            language_ic (float): Coincidence index of given language
+
+        Returns:
+            int: Length of the key used to cipher the text
+        """
         ics = self.__generate_ics(ciphered_text)
         range = 0.001
         flag = True
