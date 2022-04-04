@@ -16,7 +16,7 @@ PORTUGUESE_IC = 0.072723
 
 if __name__ == "__main__":
 
-    ciphered_text = open("english.txt", "r").read().rstrip()
+    ciphered_text = open("test/english.txt", "r").read().rstrip()
 
     kf = KeyFinder(ENGLISH_ALPHA)
     key_size = kf.find_key_size(ciphered_text, ENGLISH_IC)

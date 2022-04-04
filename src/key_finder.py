@@ -12,7 +12,7 @@ class KeyFinder:
         self.__max_key_size = len(alphabet)
         self.__alphabet: List = list(alphabet)
 
-    def __generate_sequences(self, ciphered_text: str, key_size: int) -> List:
+    def __generate_sequences(self, ciphered_text: str, key_size: int) -> List[str]:
         sequences = list()
         for key in range(key_size):
             stringBuilder = str()
@@ -29,7 +29,7 @@ class KeyFinder:
             sum += letter_frequency * (letter_frequency - 1)
         return sum / (n * (n - 1))
 
-    def __generate_ics(self, ciphered_text):
+    def __generate_ics(self, ciphered_text: str) -> List[str]:
         ics = list()
         for key_size in range(1, self.__max_key_size+1):
             sum = 0
@@ -39,7 +39,7 @@ class KeyFinder:
             ics.append(sum/len(sequences))
         return ics
 
-    def find_key_size(self, ciphered_text, language_ic):
+    def find_key_size(self, ciphered_text: str, language_ic: float) -> int:
         ics = self.__generate_ics(ciphered_text)
         range = 0.001
         flag = True

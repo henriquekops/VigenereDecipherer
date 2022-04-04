@@ -14,7 +14,7 @@ class FrequencyAnalyser:
     def __init__(self, key_size: int) -> None:
         self.__key_size = key_size
 
-    def __generate_key_blocks(self, ciphered_text: str) -> List:
+    def __generate_key_blocks(self, ciphered_text: str) -> List[str]:
         blocks = wrap(ciphered_text, self.__key_size)
         return [''.join(map(lambda x: x[k], filter(lambda x: len(x) > k, blocks))) for k in range(self.__key_size)]
 
