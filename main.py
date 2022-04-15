@@ -13,7 +13,6 @@ from src.frequency_analyser import FrequencyAnalyser
 
 __author__ = "Henrique Kops"
 
-AVAILABLE_LANGUAGES = ["english", "portuguese"]
 HELP = "Usage:\n\tpython main.py < ciphered file >"
 
 
