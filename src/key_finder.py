@@ -60,14 +60,13 @@ class KeyFinder:
             int: Length of the key used to cipher the text
         """
         ics = self.__generate_ics(ciphered_text)
-        range = 0.001
-        flag = True
-        while (flag):
-            key_size = 1
+        range = 0.01
+        ic_diff = 1
+        while (ic_diff > range):
+            key_size = 0
             for ic in ics:
-                if self.IC + range > ic and self.IC - range < ic:
-                    flag = False
-                    break
-                key_size += 1
-            range += 0.001
+                if ic_diff > range:
+                    ic_diff = self.IC - ic
+                    key_size += 1
+            range += range
         return key_size
