@@ -19,6 +19,26 @@ HELP = "Usage:\n\tpython main.py < ciphered file >"
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 IC = 0.065
 
+def open_file(file_path: str) -> str:
+    """Tries to open file's content as string, validating if it exists
+
+    Args:
+        file_path (str): Path of the file to open
+
+    Returns:
+        str: File's content
+    """
+    file = IOBase()
+    try:
+        file = open(file_path, "r")
+        return file.read().rstrip()
+    except FileNotFoundError:
+        print("ERROR: Ciphered text not found!")
+        print(HELP)
+        exit(0)
+    finally:
+        file.close()
+
 
 if __name__ == "__main__":
 
@@ -28,18 +48,7 @@ if __name__ == "__main__":
 
     file_path = argv[1]
 
-    file = IOBase()
-    ciphered_text: str
-    
-    try:
-        file = open(file_path, "r")
-        ciphered_text = file.read().rstrip()
-    except FileNotFoundError:
-        print("ERROR: Ciphered text not found!")
-        print(HELP)
-        exit(0)
-    finally:
-        file.close()
+    ciphered_text: str = open_file(file_path)
 
     s = time.time()
 
