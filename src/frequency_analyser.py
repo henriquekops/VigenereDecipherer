@@ -22,7 +22,6 @@ class FrequencyAnalyser:
         """
         self.__key_size = key_size
 
-    # TODO: mocked character 'e', watch out for portuguese
     def __discover_key(self, sequences: List) -> str:
         """Key discovery by frequency analisys over ciphered sequences by same key
 
