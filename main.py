@@ -16,8 +16,6 @@ __author__ = "Henrique Kops"
 AVAILABLE_LANGUAGES = ["english", "portuguese"]
 HELP = "Usage:\n\tpython main.py < ciphered file >"
 
-ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-IC = 0.065
 
 def open_file(file_path: str) -> str:
     """Tries to open file's content as string, validating if it exists
@@ -52,8 +50,8 @@ if __name__ == "__main__":
 
     s = time.time()
 
-    kf = KeyFinder(ALPHABET)
-    key_size = kf.find_key_size(ciphered_text, IC)
+    kf = KeyFinder()
+    key_size = kf.find_key_size(ciphered_text)
 
     fa = FrequencyAnalyser(key_size)
     key, deciphered = fa.decipher(ciphered_text)

@@ -12,14 +12,10 @@ __author__ = "Henrique Kops"
 
 class KeyFinder:
 
-    def __init__(self, alphabet: str) -> None:
-        """KeyFinder class is meant to find the key size for a ciphered text using Vigenere's Cipher
+    """KeyFinder class is meant to find the key size for a ciphered text using Vigenere's Cipher"""
 
-        Args:
-            alphabet (str): String representation of all letters of chosen alphabet
-        """
-        self.__max_key_size = len(alphabet)
-        self.__alphabet: List = list(alphabet)
+    ALPHABET = "abcdefghijklmnopqrstuvwxyz"
+    IC = 0.065
 
     def __coincidence_index(self, sequence: str) -> float:
         """Calculate the coincidence index for a given sequence of chars
@@ -32,7 +28,7 @@ class KeyFinder:
         """
         sum = 0
         n = len(sequence)
-        for letter in self.__alphabet:
+        for letter in list(self.ALPHABET):
             letter_frequency = sequence.count(letter)
             sum += letter_frequency * (letter_frequency - 1)
         return sum / (n * (n - 1))
@@ -47,19 +43,18 @@ class KeyFinder:
             List[str]: A list of average of coincidence indexes by key size
         """
         ics = list()
-        for key_size in range(1, self.__max_key_size+1):
+        for key_size in range(1, len(self.ALPHABET)+1):
             sum = 0
             sequences = generate_key_sequences(ciphered_text, key_size)
             for sequence in sequences: sum += self.__coincidence_index(sequence)
             ics.append(sum/len(sequences))
         return ics
 
-    def find_key_size(self, ciphered_text: str, language_ic: float) -> int:
+    def find_key_size(self, ciphered_text: str) -> int:
         """Find the key size that encrypts the ciphered text at given language 
 
         Args:
             ciphered_text (str):  Ciphered text by Vigenere's Cipher
-            language_ic (float): Coincidence index of given language
 
         Returns:
             int: Length of the key used to cipher the text
@@ -70,7 +65,7 @@ class KeyFinder:
         while (flag):
             key_size = 1
             for ic in ics:
-                if language_ic + range > ic and language_ic - range < ic:
+                if self.IC + range > ic and self.IC - range < ic:
                     flag = False
                     break
                 key_size += 1
