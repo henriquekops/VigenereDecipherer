@@ -26,7 +26,7 @@ class FrequencyAnalyser:
         """Key discovery by frequency analisys over ciphered sequences by same key
 
         Args:
-            sequencies (List): List of sequences where each is ciphered by same key
+            sequences (List): List of sequences where each is ciphered by same key
 
         Returns:
             str: Key used to cipher the text

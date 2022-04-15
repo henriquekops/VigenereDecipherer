@@ -5,7 +5,6 @@
 from io import IOBase
 import time
 from sys import argv, exit
-from typing import final
 
 # project dependencies
 from src.key_finder import KeyFinder

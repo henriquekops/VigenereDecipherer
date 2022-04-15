@@ -10,6 +10,6 @@ To execute  this code, simply trigger:
 
 ```sh
 # execute program
-$ python main.py < ciphered file > <english | portuguese>
+$ python main.py < ciphered file >
 ```
 > OBS: The expected python version is 3.9 or higher
